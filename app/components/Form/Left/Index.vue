@@ -1,8 +1,8 @@
 <template>
   <div class="panel-layout">
-    <FormLeftInvoiceDocumentSection />
-    <FormLeftInvoiceContractorSection />
-    <FormLeftInvoiceClientSection />
+    <FormLeftDocumentSection />
+    <FormLeftContractorSection />
+    <FormLeftClientSection />
   </div>
 </template>
 

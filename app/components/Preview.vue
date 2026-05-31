@@ -3,27 +3,12 @@ import { useInvoiceStore } from '~/stores/invoice'
 
 const store = useInvoiceStore()
 
-// Получаем темы оформления
 const { data: themes } = await useFetch('/api/themes')
 
 const currentThemeCss = computed(() => {
   const theme = themes.value?.find((t: any) => t.id === store.data.theme)
   return theme?.css || ''
 })
-
-// Хелперы для форматирования (если они у вас не автоимпортируются, раскомментируйте или настройте под себя)
-const formatDate = (dateStr: string) => {
-  if (!dateStr) return '—'
-  return new Date(dateStr).toLocaleDateString()
-}
-
-const formatCurrency = (amount: number, currency: string) => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount)
-}
-
-const calculateTotal = (items: any[]) => {
-  return items.reduce((sum, item) => sum + (Number(item.qty || 0) * Number(item.rate || 0)), 0)
-}
 </script>
 
 <template>
