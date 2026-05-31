@@ -5,22 +5,16 @@ const props = defineProps<{
   data: any
 }>()
 
-// Получаем темы с сервера (Nuxt закэширует это при SSG билде)
 const { data: themes } = await useFetch('/api/themes')
 
-// Вычисляем CSS для текущей выбранной темы
 const currentThemeCss = computed(() => {
-  const themeId = props.data.theme || 'default'
-  const theme = themes.value?.find((t: any) => t.id === themeId)
+  const theme = themes.value?.find((t: any) => t.id === store.data.theme)
   return theme?.css || ''
 })
 
 const total = computed(() =>
     props.data.items.reduce((s: number, i: any) => s + (Number(i.qty) || 0) * (Number(i.rate) || 0), 0)
 )
-
-const formatCurrency = (v: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: props.data.currency || 'USD' }).format(v)
 
 const formatDate = (d: string) => {
   if (!d) return '—'
