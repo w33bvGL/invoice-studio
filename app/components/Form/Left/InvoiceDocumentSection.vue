@@ -1,9 +1,10 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
+const currencyOptions = computed(() => appConfig.invoice.currencies)
+
 defineProps<{
   modelValue: any
 }>()
-
-const currencyOptions = ['USD', 'EUR', 'GBP', 'AMD', 'RUB']
 </script>
 
 <template>
