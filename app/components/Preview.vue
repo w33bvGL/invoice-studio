@@ -5,6 +5,16 @@ const props = defineProps<{
   data: any
 }>()
 
+// Получаем темы с сервера (Nuxt закэширует это при SSG билде)
+const { data: themes } = await useFetch('/api/themes')
+
+// Вычисляем CSS для текущей выбранной темы
+const currentThemeCss = computed(() => {
+  const themeId = props.data.theme || 'default'
+  const theme = themes.value?.find((t: any) => t.id === themeId)
+  return theme?.css || ''
+})
+
 const total = computed(() =>
     props.data.items.reduce((s: number, i: any) => s + (Number(i.qty) || 0) * (Number(i.rate) || 0), 0)
 )
@@ -26,6 +36,10 @@ const hasBankDetails = computed(() =>
 </script>
 
 <template>
+  <component :is="'style'">
+    {{ currentThemeCss }}
+  </component>
+
   <div class="invoice-sheet" id="invoice-print" :class="`theme-${data.theme || 'default'}`">
     <div class="sheet-header">
       <div class="sheet-header__left">
@@ -146,396 +160,328 @@ const hasBankDetails = computed(() =>
 </template>
 
 <style scoped>
+.invoice-sheet {
+  background-color: #ffffff;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--base-300);
+  color: var(--base-950);
+  font-family: var(--font-body-family),sans-serif;
+  position: relative;
+  text-align: left;
+}
+
+.dark .invoice-sheet {
+  border-color: var(--base-800);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+.invoice-title {
+  font-size: 38px;
+  font-weight: var(--weight-extrabold);
+  color: var(--base-950);
+  margin: 0 0 var(--space-xxs) 0;
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+.contractor-tagline {
+  font-size: var(--font-small);
+  color: var(--base-500);
+  font-weight: var(--weight-medium);
+}
+
+.sheet-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-xxs);
+}
+
+.meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.meta-key {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--base-400);
+}
+
+.meta-val {
+  font-size: var(--font-body);
+  font-weight: var(--weight-semibold);
+  color: var(--base-900);
+}
+
+.meta-val.due {
+  color: var(--base-950);
+  font-weight: var(--weight-bold);
+}
+
+.sheet-rule {
+  height: 1px;
+  background-color: var(--base-950);
+  margin-bottom: var(--space-lg);
+}
+
+.parties-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.party-label {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--base-400);
+  margin-bottom: var(--space-xs);
+}
+
+.party-name {
+  font-size: var(--font-body-lg);
+  font-weight: var(--weight-bold);
+  color: var(--base-950);
+  margin-bottom: var(--space-xxs);
+}
+
+.party-detail {
+  font-size: var(--font-small);
+  color: var(--base-600);
+  line-height: 1.5;
+}
+
+.party-address {
+  white-space: pre-line;
+  margin: var(--space-xxs) 0;
+}
+
+.party-link {
+  font-weight: var(--weight-medium);
+}
+
+.party--right {
+  padding-left: var(--space-lg);
+  border-left: 1px solid var(--base-200);
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-lg);
+}
+
+.items-table th {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--base-500);
+  background-color: var(--base-50);
+  border-bottom: 1px solid var(--base-300);
+  border-top: 1px solid var(--base-300);
+  text-align: left;
+}
+
+.th-num {
+  text-align: right !important;
+}
+
+.item-row td {
+  padding: var(--space-sm) var(--space-sm);
+  border-bottom: 1px solid var(--base-100);
+  font-size: var(--font-small);
+  color: var(--base-900);
+}
+
+.td-desc {
+  font-weight: var(--weight-medium);
+}
+
+.td-num {
+  text-align: right;
+  color: var(--base-700);
+}
+
+.td-amount {
+  font-weight: var(--weight-semibold);
+  color: var(--base-950);
+}
+
+.subtotal-row td {
+  padding: var(--space-sm) var(--space-sm);
+  font-size: var(--font-small);
+  color: var(--base-500);
+  border-bottom: 1px solid var(--base-200);
+}
+
+.sum-label {
+  text-align: right;
+  padding-right: var(--space-md);
+}
+
+.total-row td {
+  padding: var(--space-md) var(--space-sm);
+  border-bottom: 1px solid var(--base-950);
+  border-top: 1px solid var(--base-200);
+  background-color: var(--base-50);
+}
+
+.total-label {
+  font-size: var(--font-small);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--base-800);
+  text-align: right;
+  padding-right: var(--space-md);
+}
+
+.total-amount {
+  font-size: var(--font-h2);
+  font-weight: var(--weight-extrabold);
+  color: var(--base-950);
+  text-align: right;
+}
+
+.bank-card {
+  border: 1px solid var(--base-200);
+  border-radius: var(--radius-base);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  background-color: var(--base-50);
+}
+
+.bank-card__title {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--base-500);
+  margin-bottom: var(--space-sm);
+}
+
+.bank-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xs);
+}
+
+.bank-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.bank-key {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--base-400);
+  text-transform: uppercase;
+}
+
+.bank-val {
+  font-size: var(--font-small);
+  color: var(--base-900);
+  font-weight: var(--weight-medium);
+}
+
+.notes-block {
+  margin-bottom: var(--space-lg);
+}
+
+.notes-label {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--base-400);
+  margin-bottom: var(--space-xxs);
+}
+
+.notes-text {
+  font-size: var(--font-small);
+  color: var(--base-600);
+  line-height: 1.5;
+  border-left: 1px solid var(--base-300);
+  padding-left: var(--space-sm);
+}
+
+.signature-area {
+  margin-top: auto;
+  padding-top: var(--space-lg);
+}
+
+.sig-block {
+  display: inline-block;
+}
+
+.sig-label {
+  font-size: var(--font-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--base-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-md);
+}
+
+.sig-line {
+  width: 160px;
+  height: 1px;
+  background-color: var(--base-300);
+  margin-bottom: var(--space-xxs);
+}
+
+.sig-name {
+  font-size: var(--font-xs);
+  color: var(--base-500);
+  font-weight: var(--weight-medium);
+}
+
+.sheet-footer {
+  border-top: 1px solid var(--base-100);
+  padding-top: var(--space-sm);
+  margin-top: var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: var(--font-xs);
+  color: var(--base-400);
+}
+
+.footer-id {
+  font-size: var(--font-xs);
+  color: var(--base-300);
+}
+
+@media print {
   .invoice-sheet {
-    background-color: #ffffff;
-    width: 210mm;
-    min-height: 297mm;
-    padding: 20mm;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--base-300);
-    color: var(--base-950);
-    font-family: var(--font-body-family),sans-serif;
-    position: relative;
-    text-align: left;
-  }
-
-  .dark .invoice-sheet {
-    border-color: var(--base-800);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-  }
-
-  .sheet-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: var(--space-lg);
-  }
-
-  .invoice-title {
-    font-size: 38px;
-    font-weight: var(--weight-extrabold);
-    color: var(--base-950);
-    margin: 0 0 var(--space-xxs) 0;
-    line-height: 1;
-    letter-spacing: -1.5px;
-  }
-
-  .contractor-tagline {
-    font-size: var(--font-small);
-    color: var(--base-500);
-    font-weight: var(--weight-medium);
-  }
-
-  .sheet-header__right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: var(--space-xxs);
-  }
-
-  .meta-item {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-md);
-  }
-
-  .meta-key {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--base-400);
-  }
-
-  .meta-val {
-    font-size: var(--font-body);
-    font-weight: var(--weight-semibold);
-    color: var(--base-900);
-  }
-
-  .meta-val.due {
-    color: var(--base-950);
-    font-weight: var(--weight-bold);
-  }
-
-  .sheet-rule {
-    height: 1px;
-    background-color: var(--base-950);
-    margin-bottom: var(--space-lg);
-  }
-
-  .parties-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    margin-bottom: var(--space-xl);
-  }
-
-  .party-label {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-extrabold);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--base-400);
-    margin-bottom: var(--space-xs);
-  }
-
-  .party-name {
-    font-size: var(--font-body-lg);
-    font-weight: var(--weight-bold);
-    color: var(--base-950);
-    margin-bottom: var(--space-xxs);
-  }
-
-  .party-detail {
-    font-size: var(--font-small);
-    color: var(--base-600);
-    line-height: 1.5;
-  }
-
-  .party-address {
-    white-space: pre-line;
-    margin: var(--space-xxs) 0;
-  }
-
-  .party-link {
-    font-weight: var(--weight-medium);
-  }
-
-  .party--right {
-    padding-left: var(--space-lg);
-    border-left: 1px solid var(--base-200);
-  }
-
-  .items-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: var(--space-lg);
+    min-height: auto;
+    padding: 0;
+    border: none !important;
+    box-shadow: none !important;
   }
-
-  .items-table th {
-    padding: var(--space-xs) var(--space-sm);
-    font-size: var(--font-xs);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--base-500);
-    background-color: var(--base-50);
-    border-bottom: 1px solid var(--base-300);
-    border-top: 1px solid var(--base-300);
-    text-align: left;
-  }
-
-  .th-num {
-    text-align: right !important;
-  }
-
-  .item-row td {
-    padding: var(--space-sm) var(--space-sm);
-    border-bottom: 1px solid var(--base-100);
-    font-size: var(--font-small);
-    color: var(--base-900);
-  }
-
-  .td-desc {
-    font-weight: var(--weight-medium);
-  }
-
-  .td-num {
-    text-align: right;
-    color: var(--base-700);
-  }
-
-  .td-amount {
-    font-weight: var(--weight-semibold);
-    color: var(--base-950);
-  }
-
-  .subtotal-row td {
-    padding: var(--space-sm) var(--space-sm);
-    font-size: var(--font-small);
-    color: var(--base-500);
-    border-bottom: 1px solid var(--base-200);
-  }
-
-  .sum-label {
-    text-align: right;
-    padding-right: var(--space-md);
-  }
-
-  .total-row td {
-    padding: var(--space-md) var(--space-sm);
-    border-bottom: 1px solid var(--base-950);
-    border-top: 1px solid var(--base-200);
-    background-color: var(--base-50);
-  }
-
-  .total-label {
-    font-size: var(--font-small);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--base-800);
-    text-align: right;
-    padding-right: var(--space-md);
-  }
-
-  .total-amount {
-    font-size: var(--font-h2);
-    font-weight: var(--weight-extrabold);
-    color: var(--base-950);
-    text-align: right;
-  }
-
-  .bank-card {
-    border: 1px solid var(--base-200);
-    border-radius: var(--radius-base);
-    padding: var(--space-md);
-    margin-bottom: var(--space-md);
-    background-color: var(--base-50);
-  }
-
-  .bank-card__title {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--base-500);
-    margin-bottom: var(--space-sm);
-  }
-
-  .bank-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xs);
-  }
-
-  .bank-item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bank-key {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-semibold);
-    color: var(--base-400);
-    text-transform: uppercase;
-  }
-
-  .bank-val {
-    font-size: var(--font-small);
-    color: var(--base-900);
-    font-weight: var(--weight-medium);
-  }
-
-  .notes-block {
-    margin-bottom: var(--space-lg);
-  }
-
-  .notes-label {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--base-400);
-    margin-bottom: var(--space-xxs);
-  }
-
-  .notes-text {
-    font-size: var(--font-small);
-    color: var(--base-600);
-    line-height: 1.5;
-    border-left: 1px solid var(--base-300);
-    padding-left: var(--space-sm);
-  }
-
-  .signature-area {
-    margin-top: auto;
-    padding-top: var(--space-lg);
-  }
-
-  .sig-block {
-    display: inline-block;
-  }
-
-  .sig-label {
-    font-size: var(--font-xs);
-    font-weight: var(--weight-semibold);
-    color: var(--base-400);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--space-md);
-  }
-
-  .sig-line {
-    width: 160px;
-    height: 1px;
-    background-color: var(--base-300);
-    margin-bottom: var(--space-xxs);
-  }
-
-  .sig-name {
-    font-size: var(--font-xs);
-    color: var(--base-500);
-    font-weight: var(--weight-medium);
-  }
-
-  .sheet-footer {
-    border-top: 1px solid var(--base-100);
-    padding-top: var(--space-sm);
-    margin-top: var(--space-md);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-text {
-    font-size: var(--font-xs);
-    color: var(--base-400);
-  }
-
-  .footer-id {
-    font-size: var(--font-xs);
-    color: var(--base-300);
-  }
-
-  @media print {
-    .invoice-sheet {
-      width: 100%;
-      min-height: auto;
-      padding: 0;
-      border: none !important;
-      box-shadow: none !important;
-    }
-  }
-
-  /* --- THEME: MODERN --- */
-  .theme-modern {
-    font-family: var(--font-sans);
-  }
-  .theme-modern .invoice-title {
-    color: var(--color-primary);
-    font-size: 48px;
-    text-transform: uppercase;
-    letter-spacing: -2px;
-  }
-  .theme-modern .sheet-rule {
-    height: 4px;
-    background-color: var(--color-primary);
-  }
-  .theme-modern .items-table th {
-    background-color: var(--color-primary);
-    color: var(--color-primary-fg);
-    border: none;
-  }
-  .theme-modern .total-row td {
-    background-color: var(--color-surface-raised);
-    border-top: 2px solid var(--color-primary);
-    border-bottom: none;
-  }
-  .theme-modern .total-amount {
-    color: var(--color-primary);
-  }
-  .theme-modern .bank-card {
-    background-color: var(--color-surface-raised);
-    border: none;
-    border-left: 4px solid var(--color-primary);
-  }
-
-  /* --- THEME: CLASSIC --- */
-  .theme-classic {
-    font-family: var(--font-serif); /* Используем serif из токенов */
-  }
-  .theme-classic .invoice-title {
-    font-weight: var(--weight-normal);
-    font-style: italic;
-    letter-spacing: 0;
-    border-bottom: 1px solid var(--base-300);
-    padding-bottom: var(--space-sm);
-  }
-  .theme-classic .sheet-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .theme-classic .sheet-header__right {
-    align-items: center;
-    margin-top: var(--space-md);
-    flex-direction: row;
-    gap: var(--space-xl);
-  }
-  .theme-classic .sheet-rule {
-    display: none; /* Убираем толстую линию */
-  }
-  .theme-classic .items-table th {
-    background-color: transparent;
-    border-top: 2px solid var(--base-950);
-    border-bottom: 2px solid var(--base-950);
-  }
-  .theme-classic .total-row td {
-    background-color: transparent;
-    border-bottom: 2px double var(--base-950);
-  }
+}
 </style>
