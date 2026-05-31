@@ -19,7 +19,10 @@ const tabs = computed(() => [
       <FormRightDataNotesSection />
     </div>
 
-    <FormRightDesign v-if="activeTab === 'design'" />
+    <div v-if="activeTab === 'design'" class="tab-content">
+      <FormRightDataPresests />
+      <FormRightDataLanguageSection />
+    </div>
   </div>
 </template>
 

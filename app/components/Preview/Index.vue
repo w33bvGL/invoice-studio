@@ -16,7 +16,6 @@ const currentThemeCss = computed(() => {
 
 <template>
   <div class="preview-wrapper">
-    <PreviewControls />
     <PreviewBackgroundGrid/>
 
     <div class="scroll-area">

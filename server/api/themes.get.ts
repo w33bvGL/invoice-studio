@@ -12,7 +12,7 @@ export default defineEventHandler(() => {
         },
         {
             id: 'modern',
-            name: 'Modern (Bold)',
+            name: 'Modern (Blue)',
             css: `
                 .theme-modern { font-family: 'Inter', 'Helvetica Neue', sans-serif; color: #1e293b; }
                 .theme-modern .invoice-title { color: #2563eb; font-size: 44px; letter-spacing: -1px; text-transform: uppercase; }
