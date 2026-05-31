@@ -12,10 +12,10 @@ const languageOptions = computed(() =>
 </script>
 
 <template>
-  <UiCard title="Языковые настройки" icon="i-heroicons-language">
+  <UiCard :title="$t('right.design.language.title')" icon="i-heroicons-language">
     <UiSelect
         v-model="store.data.docLang"
-        label="Язык документа:"
+        :label="$t('right.design.language.label')"
         :options="languageOptions"
     />
   </UiCard>

@@ -21,8 +21,8 @@ const tabs = computed(() => [
     </div>
 
     <div v-if="activeTab === 'design'" class="tab-content">
-      <FormRightDataPresests />
-      <FormRightDataLanguageSection />
+      <FormRightDesignPresests />
+      <FormRightDesignLanguageSection />
     </div>
   </div>
 </template>

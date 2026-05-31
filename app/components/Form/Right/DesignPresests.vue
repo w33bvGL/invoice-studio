@@ -16,10 +16,10 @@ const themeOptions = computed(() =>
 </script>
 
 <template>
-  <UiCard title="Дизайн" icon="i-heroicons-paint-brush">
+  <UiCard :title="$t('right.design.preset.title')" icon="i-heroicons-paint-brush">
     <UiSelect
         v-model="data.theme"
-        label="Выберите тему:"
+        :label="$t('right.design.preset.label')"
         :options="themeOptions"
     />
   </UiCard>
