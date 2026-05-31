@@ -1,58 +1,19 @@
 {
-  "toolbar": {
-    "export": "Export",
-    "print": "Print PDF"
-  },
-  "invoice": {
+  "doc": {
     "title": "INVOICE",
-    "from": "From",
-    "billTo": "Bill To",
     "invoiceNo": "Invoice No",
     "issueDate": "Issue Date",
     "dueDate": "Due Date",
-    "description": "Description of Services",
-    "qty": "Qty",
-    "rate": "Rate",
-    "amount": "Amount",
-    "subtotal": "Subtotal",
-    "totalDue": "Total Due",
-    "paymentDetails": "Payment Details",
-    "notes": "Notes",
-    "signature": "Authorized Signature",
-    "document": {
-      "title": "Document",
-      "invoiceNo": "Invoice No",
-      "currency": "Currency",
-      "issueDate": "Issue Date",
-      "dueDate": "Due Date"
-    },
-    "contractor": {
-      "title": "From (Contractor)",
-      "badge": "You",
-      "name": "Company / Name",
-      "regNo": "Reg No",
-      "tin": "TIN",
-      "address": "Legal Address",
-      "email": "Email",
-      "phone": "Phone",
-      "website": "Website"
-    },
-    "client": {
-      "title": "To (Client)",
-      "name": "Company / Name",
-      "address": "Legal Address",
-      "email": "Email",
-      "phone": "Phone"
-    },
+    "contractor": "FROM (CONTRACTOR)",
+    "client": "TO (CLIENT)",
+    "regNo": "Reg No",
+    "tin": "TIN",
     "items": {
-      "title": "Line Items",
-      "itemIndex": "Item #{current}",
       "description": "Description",
       "qty": "Qty",
       "rate": "Rate",
       "amount": "Amount",
-      "addRow": "Add Row",
-      "totalDue": "Total Due:"
+      "totalDue": "Total Due"
     },
     "bank": {
       "title": "Bank Details",
@@ -60,10 +21,67 @@
       "accountNo": "Account No",
       "swift": "SWIFT / BIC",
       "iban": "IBAN"
+    },
+    "notes": "Notes",
+    "signature": "Authorized Signature"
+  },
+  "left": {
+    "client": {
+      "title": "Ում (Հաճախորդ)",
+      "name": "Կազմակերպություն / Անուն",
+      "address": "Իրավաբանական հասցե",
+      "email": "Էլ. փոստ",
+      "phone": "Հեռախոս"
+    },
+    "contractor": {
+      "title": "Ումից (Կատարող)",
+      "badge": "Դուք",
+      "name": "Կազմակերպություն / Անուն",
+      "regNo": "Գրանցման №",
+      "tin": "ՀՎՀՀ",
+      "address": "Իրավաբանական հասցե",
+      "email": "Էլ. փոստ",
+      "phone": "Հեռախոս",
+      "website": "Կայք"
+    },
+    "document": {
+      "title": "Փաստաթուղթ",
+      "invoiceNo": "Հաշիվ-ապրանքագրի №",
+      "currency": "Արժույթ",
+      "issueDate": "Դուրսգրման ամսաթիվ",
+      "dueDate": "Վճարման վերջնաժամկետ"
     }
   },
-  "notes": {
-    "title": "Terms & Notes",
-    "placeholder": "Payment terms, additional corporate notes..."
+  "right": {
+    "tab": {
+      "data": "Տվյալներ",
+      "design": "Դիզայն"
+    },
+    "data": {
+      "items": {
+        "title": "Մատուցվող ծառայություններ",
+        "itemIndex": "Տող #{current}",
+        "description": "Նկարագրություն",
+        "qty": "Քանակ",
+        "rate": "Սակագին",
+        "amount": "Գումար",
+        "addRow": "Ավելացնել տող",
+        "totalDue": "Ընդամենը վճարման՝"
+      },
+      "bank": {
+        "title": "Բանկային տվյալներ",
+        "bankName": "Բանկի անվանում",
+        "accountNo": "Հաշվեհամար",
+        "swift": "SWIFT / BIC",
+        "iban": "IBAN"
+      },
+      "notes": {
+        "title": "Պայմաններ և նշումներ",
+        "placeholder": "Վճարման պայմաններ, լրացուցիչ կորպորատիվ նշումներ..."
+      }
+    },
+    "design": {
+      "title": "Պրեսետի ընտրություն"
+    }
   }
 }

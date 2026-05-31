@@ -5,17 +5,17 @@ const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
 <template>
   <div class="studio-workspace">
     <aside class="studio-sidebar side-left">
-      <FormLeft :data="invoiceData" />
+      <FormLeft/>
     </aside>
 
     <main class="studio-canvas">
       <div class="preview-scroll-container">
-        <Preview :data="invoiceData" />
+        <Preview />
       </div>
     </main>
 
     <aside class="studio-sidebar side-right">
-      <FormRight :data="invoiceData" />
+      <FormRight/>
     </aside>
 
     <JsonPanel

@@ -4,6 +4,7 @@ export const useInvoiceStore = defineStore('invoice', {
             invoiceNo: '001',
             date: new Date().toISOString().split('T')[0],
             dueDate: '',
+            docLang: 'en',
             theme: 'default',
             contractor: { name: '', address: '', email: '', phone: '', regNo: '', tin: '', website: '' },
             client: { name: '', address: '', email: '', phone: '' },
