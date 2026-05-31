@@ -33,24 +33,22 @@ function exportJson(data: any) {
     </div>
 
     <div class="toolbar-actions">
-      <!-- Локализация и Тема -->
       <UiLocaleSelect />
       <UiThemeToggle />
 
       <div class="divider"></div>
 
-      <!-- Основные действия -->
       <UiButton :variant="showJsonPanel ? 'secondary' : 'ghost'" size="sm" @click="emit('toggleJson')">
         <Icon name="heroicons:code-bracket" class="btn-icon" />
-        Toolkit
+        {{ $t('toolbar.toolkit') }}
       </UiButton>
 
       <UiButton variant="ghost" size="sm" @click="exportJson(data)">
-        Export
+        {{ $t('toolbar.export') }}
       </UiButton>
 
       <UiButton variant="primary" size="sm" @click="printInvoice">
-        Print PDF
+        {{ $t('toolbar.print') }}
       </UiButton>
     </div>
   </header>
