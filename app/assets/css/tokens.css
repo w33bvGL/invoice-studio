@@ -7,7 +7,7 @@
 :root {
     --font-header: var(--font-sans);
     --font-body-family: var(--font-sans);
-    --font-size-root: 16px;
+    --font-size-root: 1px;
 
     --base-50: oklch(98.5% 0 0);
     --base-100: oklch(96.5% 0 0);
