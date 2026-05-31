@@ -16,9 +16,10 @@ const currentThemeCss = computed(() => {
 
 <template>
   <div class="preview-wrapper">
-    <PreviewControls/>
+    <PreviewControls />
+    <PreviewBackgroundGrid/>
 
-    <div class="preview-container">
+    <div class="scroll-area">
       <component :is="'style'">{{ currentThemeCss }}</component>
 
       <div class="invoice-sheet" id="invoice-print" :class="`theme-${store.data.theme || 'default'}`">
@@ -38,13 +39,19 @@ const currentThemeCss = computed(() => {
   flex-direction: column;
   height: 100%;
   background-color: var(--bg-body);
+  overflow: hidden;
+  position: relative;
 }
 
-.preview-container {
-  padding: 40px;
+.scroll-area {
+  flex: 1;
+  position: relative;
   overflow-y: auto;
+  padding: 40px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
 }
 
 .invoice-sheet {
@@ -60,6 +67,7 @@ const currentThemeCss = computed(() => {
   line-height: 1.5;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   position: relative;
+  z-index: 1;
   text-align: left;
 }
 
@@ -70,6 +78,8 @@ const currentThemeCss = computed(() => {
 }
 
 @media print {
-  .invoice-sheet { width: 100%; min-height: 100%;}
+  .preview-wrapper { overflow: visible; }
+  .scroll-area { padding: 0; overflow: visible; }
+  .invoice-sheet { width: 100%; min-height: 100%; box-shadow: none; }
 }
 </style>

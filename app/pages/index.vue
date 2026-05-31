@@ -9,9 +9,7 @@ const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
     </aside>
 
     <main class="studio-canvas">
-      <div class="preview-scroll-container">
-        <Preview />
-      </div>
+      <Preview />
     </main>
 
     <aside class="studio-sidebar side-right">
@@ -28,51 +26,32 @@ const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
 </template>
 
 <style scoped>
-@layer components {
-  .studio-workspace {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 350px 1fr 350px;
-    overflow: hidden;
-  }
+.studio-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 450px 1fr 450px;
+  height: 100vh;
+  overflow: hidden;
+}
 
-  .studio-sidebar {
-    overflow-y: auto;
-    background-color: var(--bg-elevated);
-    border-color: var(--border-color);
-  }
+.studio-sidebar {
+  overflow-y: auto;
+  background-color: var(--bg-elevated);
+  border-color: var(--border-color);
+}
 
-  .side-left {
-    border-right: 1px solid var(--border-color);
-  }
+.side-left { border-right: 1px solid var(--border-color); }
+.side-right { border-left: 1px solid var(--border-color); }
 
-  .side-right {
-    border-left: 1px solid var(--border-color);
-  }
+.studio-canvas {
+  background-color: var(--bg-body);
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
 
-  .studio-canvas {
-    overflow-y: auto;
-    background-color: var(--bg-body);
-    display: flex;
-    justify-content: center;
-    padding: var(--space-xl) var(--space-md);
-  }
-
-  .preview-scroll-container {
-    width: 100%;
-    max-width: var(--container-width);
-    display: flex;
-    justify-content: center;
-  }
-
-  @media print {
-    .studio-workspace {
-      display: block !important;
-    }
-    .studio-canvas {
-      padding: 0 !important;
-      overflow: visible !important;
-    }
-  }
+@media print {
+  .studio-workspace { display: block !important; }
+  .studio-canvas { overflow: visible !important; }
 }
 </style>

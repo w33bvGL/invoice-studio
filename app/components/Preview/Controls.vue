@@ -30,8 +30,9 @@ const languageOptions = computed(() =>
 
 <style scoped>
 .preview-controls {
+  z-index: 2;
   padding: 16px;
-  background-color: #ffffff; /* Жесткий цвет для стабильности */
+  background-color: #ffffff;
   border-bottom: 1px solid #e5e7eb;
   display: flex;
   justify-content: flex-end;
