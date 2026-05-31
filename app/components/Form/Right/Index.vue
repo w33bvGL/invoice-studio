@@ -17,14 +17,12 @@ const tabs = [
     <UiTabs :tabs="tabs" v-model="activeTab" />
 
     <div v-if="activeTab === 'data'" class="tab-content">
-      <FormRightInvoiceItemsSection :model-value="data" @update:model-value="$emit('update:data', $event)" />
+      <FormRightInvoiceItemsSection :model-value="data" />
+      <FormRightInvoiceBankSection :model-value="data" />
+      <FormRightInvoiceNotesSection :model-value="data" />
     </div>
 
-    <FormRightDesign
-        v-if="activeTab === 'design'"
-        :model-value="data"
-        @update:model-value="$emit('update:data', $event)"
-    />
+    <FormRightDesign v-if="activeTab === 'design'" :model-value="data" @update:model-value="$emit('update:data', $event)" />
   </div>
 </template>
 

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { useInvoiceStore } from '~/stores/invoice'
 
-const props = defineProps<{
-  data: any
-}>()
+const store = useInvoiceStore()
 
 const { data: themes } = await useFetch('/api/themes')
 
@@ -11,22 +9,6 @@ const currentThemeCss = computed(() => {
   const theme = themes.value?.find((t: any) => t.id === store.data.theme)
   return theme?.css || ''
 })
-
-const total = computed(() =>
-    props.data.items.reduce((s: number, i: any) => s + (Number(i.qty) || 0) * (Number(i.rate) || 0), 0)
-)
-
-const formatDate = (d: string) => {
-  if (!d) return '—'
-  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-}
-
-const hasBankDetails = computed(() =>
-    props.data.bankDetails?.bankName ||
-    props.data.bankDetails?.accountNo ||
-    props.data.bankDetails?.swift ||
-    props.data.bankDetails?.iban
-)
 </script>
 
 <template>
@@ -34,24 +16,25 @@ const hasBankDetails = computed(() =>
     {{ currentThemeCss }}
   </component>
 
-  <div class="invoice-sheet" id="invoice-print" :class="`theme-${data.theme || 'default'}`">
+  <div class="invoice-sheet" id="invoice-print" :class="`theme-${store.data.theme || 'default'}`">
+
     <div class="sheet-header">
       <div class="sheet-header__left">
         <h1 class="invoice-title">INVOICE</h1>
-        <div class="contractor-tagline">{{ data.contractor.name }}</div>
+        <div class="contractor-tagline">{{ store.data.contractor.name }}</div>
       </div>
       <div class="sheet-header__right">
         <div class="meta-item">
           <span class="meta-key">Invoice No</span>
-          <span class="meta-val font-mono">#{{ data.invoiceNo }}</span>
+          <span class="meta-val font-mono">#{{ store.data.invoiceNo }}</span>
         </div>
         <div class="meta-item">
           <span class="meta-key">Issue Date</span>
-          <span class="meta-val">{{ formatDate(data.date) }}</span>
+          <span class="meta-val">{{ formatDate(store.data.date) }}</span>
         </div>
         <div class="meta-item">
           <span class="meta-key">Due Date</span>
-          <span class="meta-val due">{{ formatDate(data.dueDate) }}</span>
+          <span class="meta-val due">{{ formatDate(store.data.dueDate) }}</span>
         </div>
       </div>
     </div>
@@ -61,98 +44,48 @@ const hasBankDetails = computed(() =>
     <div class="parties-grid">
       <div class="party">
         <div class="party-label">From</div>
-        <div class="party-name">{{ data.contractor.name }}</div>
-        <div v-if="data.contractor.regNo || data.contractor.tin" class="party-detail font-mono">
-          <span v-if="data.contractor.regNo">Reg: {{ data.contractor.regNo }}</span>
-          <span v-if="data.contractor.regNo && data.contractor.tin"> · </span>
-          <span v-if="data.contractor.tin">TIN: {{ data.contractor.tin }}</span>
-        </div>
-        <div v-if="data.contractor.address" class="party-detail party-address">{{ data.contractor.address }}</div>
-        <div v-if="data.contractor.email" class="party-detail">{{ data.contractor.email }}</div>
-        <div v-if="data.contractor.phone" class="party-detail">{{ data.contractor.phone }}</div>
-        <div v-if="data.contractor.website" class="party-detail party-link">{{ data.contractor.website }}</div>
+        <div class="party-name">{{ store.data.contractor.name }}</div>
+        <div class="party-detail">{{ store.data.contractor.email }}</div>
+        <div class="party-detail">{{ store.data.contractor.phone }}</div>
       </div>
 
       <div class="party party--right">
         <div class="party-label">Bill To</div>
-        <div class="party-name">{{ data.client.name || '—' }}</div>
-        <div v-if="data.client.address" class="party-detail party-address">{{ data.client.address }}</div>
-        <div v-if="data.client.email" class="party-detail">{{ data.client.email }}</div>
-        <div v-if="data.client.phone" class="party-detail">{{ data.client.phone }}</div>
+        <div class="party-name">{{ store.data.client.name || '—' }}</div>
+        <div class="party-detail">{{ store.data.client.email }}</div>
       </div>
     </div>
 
     <table class="items-table">
       <thead>
       <tr>
-        <th class="th-desc">Description of Services</th>
+        <th class="th-desc">Description</th>
         <th class="th-num">Qty</th>
         <th class="th-num">Rate</th>
         <th class="th-num">Amount</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, i) in data.items" :key="item.id || i" class="item-row">
-        <td class="td-desc">{{ item.description || '—' }}</td>
+      <tr v-for="(item, i) in store.data.items" :key="i" class="item-row">
+        <td class="td-desc">{{ item.description }}</td>
         <td class="td-num font-mono">{{ item.qty }}</td>
-        <td class="td-num font-mono">{{ formatCurrency(item.rate) }}</td>
-        <td class="td-num td-amount font-mono">{{ formatCurrency((item.qty || 0) * (item.rate || 0)) }}</td>
+        <td class="td-num font-mono">{{ formatCurrency(item.rate, store.data.currency) }}</td>
+        <td class="td-num td-amount font-mono">
+          {{ formatCurrency(Number(item.qty) * Number(item.rate), store.data.currency) }}
+        </td>
       </tr>
       </tbody>
       <tfoot>
-      <tr class="subtotal-row">
-        <td colspan="3" class="sum-label">Subtotal</td>
-        <td class="td-num font-mono">{{ formatCurrency(total) }}</td>
-      </tr>
       <tr class="total-row">
         <td colspan="3" class="total-label">Total Due</td>
-        <td class="total-amount font-mono">{{ formatCurrency(total) }} {{ data.currency }}</td>
+        <td class="total-amount font-mono">
+          {{ formatCurrency(calculateTotal(store.data.items), store.data.currency) }}
+        </td>
       </tr>
       </tfoot>
     </table>
-
-    <div v-if="hasBankDetails" class="bank-card">
-      <div class="bank-card__title">Payment Details</div>
-      <div class="bank-grid">
-        <div v-if="data.bankDetails.bankName" class="bank-item">
-          <span class="bank-key">Bank</span>
-          <span class="bank-val">{{ data.bankDetails.bankName }}</span>
-        </div>
-        <div v-if="data.bankDetails.accountNo" class="bank-item">
-          <span class="bank-key">Account</span>
-          <span class="bank-val font-mono">{{ data.bankDetails.accountNo }}</span>
-        </div>
-        <div v-if="data.bankDetails.swift" class="bank-item">
-          <span class="bank-key">SWIFT / BIC</span>
-          <span class="bank-val font-mono">{{ data.bankDetails.swift }}</span>
-        </div>
-        <div v-if="data.bankDetails.iban" class="bank-item">
-          <span class="bank-key">IBAN</span>
-          <span class="bank-val font-mono">{{ data.bankDetails.iban }}</span>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="data.notes" class="notes-block">
-      <div class="notes-label">Notes</div>
-      <div class="notes-text">{{ data.notes }}</div>
-    </div>
-
-    <div class="signature-area">
-      <div class="sig-block">
-        <div class="sig-label">Authorized Signature</div>
-        <div class="sig-line"></div>
-        <div class="sig-name">{{ data.contractor.name }}</div>
-      </div>
-    </div>
-
-    <footer class="sheet-footer">
-      <div class="footer-text">Thank you for your business.</div>
-      <div class="footer-id font-mono">#{{ data.invoiceNo }}</div>
-    </footer>
   </div>
 </template>
-
 <style scoped>
 .invoice-sheet {
   background-color: #ffffff;

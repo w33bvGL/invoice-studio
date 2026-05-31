@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const useInvoiceStore = defineStore('invoice', {
     state: () => ({
         data: {
@@ -16,11 +14,11 @@ export const useInvoiceStore = defineStore('invoice', {
         } as any
     }),
     actions: {
-        updateInvoice(newData: any) {
-            this.data = { ...this.data, ...newData }
-        },
-        updateTheme(themeId: string) {
-            this.data.theme = themeId
+        updateData(path: string, value: any) {
+            const keys = path.split('.')
+            let obj = this.data
+            for (let i = 0; i < keys.length - 1; i++) obj = obj[keys[i]]
+            obj[keys[keys.length - 1]] = value
         }
     }
 })

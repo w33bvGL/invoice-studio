@@ -1,8 +1,6 @@
 <script setup lang="ts">
-
-defineProps<{ modelValue: any }>()
-const emit = defineEmits(['update:modelValue'])
-
+import { useInvoiceStore } from '~/stores/invoice'
+const store = useInvoiceStore()
 const { data: themes } = await useFetch('/api/themes')
 </script>
 
@@ -13,10 +11,10 @@ const { data: themes } = await useFetch('/api/themes')
         v-for="theme in themes"
         :key="theme.id"
         type="button"
-        :class="['theme-card', { active: modelValue.theme === theme.id }]"
-        @click="emit('update:modelValue', { ...modelValue, theme: theme.id })"
+        :class="['theme-card', { active: store.data.theme === theme.id }]"
+        @click="store.data.theme = theme.id"
     >
-      <span class="theme-name">{{ theme.name }}</span>
+      {{ theme.name }}
     </button>
   </div>
 </template>
