@@ -1,22 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useInvoiceStore } from '~/stores/invoice'
 
-const props = defineProps<{
-  modelValue: any
-}>()
+const store = useInvoiceStore()
+const { data } = storeToRefs(store)
 
 const total = computed(() =>
-    props.modelValue.items.reduce((s: number, i: any) => s + (Number(i.qty) || 0) * (Number(i.rate) || 0), 0)
+    data.value.items.reduce((s: number, i: any) => s + (Number(i.qty) || 0) * (Number(i.rate) || 0), 0)
 )
 
 const formatCurrency = (v: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: props.modelValue.currency || 'USD' }).format(v)
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: data.value.currency || 'USD' }).format(v)
 
 function addItem() {
-  props.modelValue.items.push({ id: Date.now(), description: '', qty: 1, rate: 0 })
+  data.value.items.push({ id: Date.now(), description: '', qty: 1, rate: 0 })
 }
 
 function removeItem(index: number) {
-  if (props.modelValue.items.length > 1) props.modelValue.items.splice(index, 1)
+  if (data.value.items.length > 1) {
+    data.value.items.splice(index, 1)
+  }
 }
 </script>
 
@@ -24,12 +28,12 @@ function removeItem(index: number) {
   <UiCard :title="$t('right.data.items.title')" icon="heroicons:bolt">
     <div class="items-list">
       <FormRightItemCard
-          v-for="(item, index) in modelValue.items"
+          v-for="(item, index) in data.items"
           :key="item.id"
           :item="item"
           :index="index"
-          :currency="modelValue.currency"
-          :show-remove="modelValue.items.length > 1"
+          :currency="data.currency"
+          :show-remove="data.items.length > 1"
           @remove="removeItem(index)"
       />
     </div>
