@@ -17,6 +17,7 @@ const tabs = computed(() => [
       <FormRightDataItemsSection />
       <FormRightDataBankSection />
       <FormRightDataNotesSection />
+      <FormRightDataSignatureSection />
     </div>
 
     <div v-if="activeTab === 'design'" class="tab-content">

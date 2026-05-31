@@ -11,6 +11,7 @@ export const useInvoiceStore = defineStore('invoice', {
             items: [{ id: 1, description: '', qty: 0, rate: 0 }],
             currency: 'USD',
             bankDetails: { bankName: '', accountNo: '', swift: '', iban: '' },
+            signatureImage: '',
             notes: ''
         } as any
     }),
