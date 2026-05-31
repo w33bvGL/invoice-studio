@@ -55,7 +55,6 @@ function exportJson(data: any) {
 </template>
 
 <style scoped>
-@layer components {
   .toolbar {
     display: flex;
     align-items: center;
@@ -102,5 +101,4 @@ function exportJson(data: any) {
     align-items: center;
     gap: var(--space-xs);
   }
-}
 </style>

@@ -66,7 +66,6 @@ const currencyOptions = ['USD', 'EUR', 'GBP', 'AMD', 'RUB']
 </template>
 
 <style scoped>
-@layer components {
   .panel-layout {
     padding: var(--space-base);
     display: flex;
@@ -114,5 +113,4 @@ const currencyOptions = ['USD', 'EUR', 'GBP', 'AMD', 'RUB']
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
   }
-}
 </style>

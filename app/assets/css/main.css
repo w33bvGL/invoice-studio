@@ -1,7 +1,5 @@
-@layer reset, tokens, base, components, scrollbar, utilities;
-
-@import './reset.css' layer(reset);
-@import './tokens.css' layer(tokens);
-@import './base.css' layer(base);
-@import './scrollbar.css' layer(scrollbar);
-@import './utilities.css' layer(utilities);
+@import './tokens.css';
+@import './reset.css';
+@import './base.css';
+@import './scrollbar.css';
+@import './utilities.css';

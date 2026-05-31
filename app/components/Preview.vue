@@ -146,9 +146,8 @@ const hasBankDetails = computed(() =>
 </template>
 
 <style scoped>
-@layer components {
   .invoice-sheet {
-    background-color: #ffffff; /* Всегда белый лист для печати */
+    background-color: #ffffff;
     width: 210mm;
     min-height: 297mm;
     padding: 20mm;
@@ -157,12 +156,11 @@ const hasBankDetails = computed(() =>
     flex-direction: column;
     border: 1px solid var(--base-300);
     color: var(--base-950);
-    font-family: var(--font-body-family);
+    font-family: var(--font-body-family),sans-serif;
     position: relative;
     text-align: left;
   }
 
-  /* Настройки темной темы: сам холст студии темный, но А4 лист остается контрастным */
   .dark .invoice-sheet {
     border-color: var(--base-800);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
@@ -472,5 +470,4 @@ const hasBankDetails = computed(() =>
       box-shadow: none !important;
     }
   }
-}
 </style>

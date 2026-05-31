@@ -24,7 +24,6 @@ const model = defineModel<string | number>()
 </template>
 
 <style scoped>
-@layer components {
   .ui-field {
     display: flex;
     flex-direction: column;
@@ -64,5 +63,4 @@ const model = defineModel<string | number>()
     font-size: var(--font-xs);
     color: oklch(60% 0.15 20);
   }
-}
 </style>

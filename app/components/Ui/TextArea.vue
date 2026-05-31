@@ -23,7 +23,6 @@ const model = defineModel<string>()
 </template>
 
 <style scoped>
-@layer components {
   .ui-field {
     display: flex;
     flex-direction: column;
@@ -55,5 +54,4 @@ const model = defineModel<string>()
     outline: none;
     border-color: var(--color-border-strong);
   }
-}
 </style>

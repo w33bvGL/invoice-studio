@@ -75,7 +75,6 @@ function handleImport() {
 </template>
 
 <style scoped>
-@layer components {
   .json-panel {
     position: fixed;
     inset: 0;
@@ -184,5 +183,4 @@ function handleImport() {
     border-radius: var(--radius-base);
     font-size: var(--font-xs);
   }
-}
 </style>

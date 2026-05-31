@@ -92,7 +92,6 @@ function removeItem(index: number) {
 </template>
 
 <style scoped>
-@layer components {
   .panel-layout {
     padding: var(--space-base);
     display: flex;
@@ -208,5 +207,4 @@ function removeItem(index: number) {
   .w-full {
     width: 100%;
   }
-}
 </style>

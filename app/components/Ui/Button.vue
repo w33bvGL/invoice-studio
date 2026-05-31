@@ -17,7 +17,6 @@ withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped>
-@layer components {
   .ui-btn {
     display: inline-flex;
     align-items: center;
@@ -82,5 +81,4 @@ withDefaults(defineProps<Props>(), {
     opacity: 0.5;
     cursor: not-allowed;
   }
-}
 </style>
