@@ -34,7 +34,9 @@ const invoiceData = reactive({
 })
 
 function handleImportJson(json: any) {
-  Object.assign(invoiceData, json)
+  if (json && typeof json === 'object') {
+    Object.assign(invoiceData, json)
+  }
 }
 </script>
 
@@ -47,75 +49,88 @@ function handleImportJson(json: any) {
     />
 
     <div class="studio-workspace">
-      <aside class="studio-panel studio-panel--left">
+      <aside class="studio-sidebar side-left">
         <FormLeft :data="invoiceData" />
       </aside>
 
-      <main class="studio-preview-area">
-        <Preview :data="invoiceData" />
+      <main class="studio-canvas">
+        <div class="preview-scroll-container">
+          <Preview :data="invoiceData" />
+        </div>
       </main>
 
-      <aside class="studio-panel studio-panel--right">
+      <aside class="studio-sidebar side-right">
         <FormRight :data="invoiceData" />
       </aside>
     </div>
 
-    <Transition name="slide-up">
-      <JsonPanel
-          v-if="showJsonPanel"
-          :data="invoiceData"
-          @import="handleImportJson"
-          @close="showJsonPanel = false"
-      />
-    </Transition>
+    <JsonPanel
+        v-if="showJsonPanel"
+        :data="invoiceData"
+        @import="handleImportJson"
+        @close="showJsonPanel = false"
+    />
   </div>
 </template>
 
 <style scoped>
-.invoice-studio {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background: #0a0a0f;
-  overflow: hidden;
-  font-family: 'DM Sans', sans-serif;
-}
+@layer components {
+  .invoice-studio {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-body);
+  }
 
-.studio-workspace {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 340px 1fr 340px;
-  overflow: hidden;
-  gap: 0;
-}
+  .studio-workspace {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 350px 1fr 350px;
+    overflow: hidden;
+  }
 
-.studio-panel {
-  overflow-y: auto;
-  background: #0f0f17;
-  border-right: 1px solid rgba(255,255,255,0.06);
-}
+  .studio-sidebar {
+    overflow-y: auto;
+    background-color: var(--bg-elevated);
+    border-color: var(--border-color);
+  }
 
-.studio-panel--right {
-  border-right: none;
-  border-left: 1px solid rgba(255,255,255,0.06);
-}
+  .side-left {
+    border-right: 1px solid var(--border-color);
+  }
 
-.studio-preview-area {
-  overflow-y: auto;
-  background: #141420;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 40px 24px;
-}
+  .side-right {
+    border-left: 1px solid var(--border-color);
+  }
 
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.slide-up-enter-from,
-.slide-up-leave-to {
-  transform: translateY(100%);
-  opacity: 0;
+  .studio-canvas {
+    overflow-y: auto;
+    background-color: var(--bg-body);
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .preview-scroll-container {
+    width: 100%;
+    max-width: var(--container-width);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Печатные хаки — убираем всё лишнее при печати */
+  @media print {
+    .toolbar, .studio-sidebar {
+      display: none !important;
+    }
+    .studio-workspace {
+      display: block !important;
+    }
+    .studio-canvas {
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+  }
 }
 </style>
