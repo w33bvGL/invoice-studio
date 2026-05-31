@@ -1,5 +1,24 @@
 {
+  "toolbar": {
+    "export": "Export",
+    "print": "Print PDF"
+  },
   "invoice": {
+    "title": "INVOICE",
+    "from": "From",
+    "billTo": "Bill To",
+    "invoiceNo": "Invoice No",
+    "issueDate": "Issue Date",
+    "dueDate": "Due Date",
+    "description": "Description of Services",
+    "qty": "Qty",
+    "rate": "Rate",
+    "amount": "Amount",
+    "subtotal": "Subtotal",
+    "totalDue": "Total Due",
+    "paymentDetails": "Payment Details",
+    "notes": "Notes",
+    "signature": "Authorized Signature",
     "document": {
       "title": "Document",
       "invoiceNo": "Invoice No",
@@ -41,10 +60,10 @@
       "accountNo": "Account No",
       "swift": "SWIFT / BIC",
       "iban": "IBAN"
-    },
-    "notes": {
-      "title": "Terms & Notes",
-      "placeholder": "Payment terms, additional corporate notes..."
     }
+  },
+  "notes": {
+    "title": "Terms & Notes",
+    "placeholder": "Payment terms, additional corporate notes..."
   }
 }
