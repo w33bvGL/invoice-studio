@@ -1,68 +1,22 @@
 <script setup lang="ts">
-const showJsonPanel = ref(false)
-
-const invoiceData = reactive({
-  invoiceNo: '2026-001',
-  date: new Date().toISOString().split('T')[0],
-  dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-  contractor: {
-    name: 'IE Vahe Sargsyan',
-    regNo: '286.1571600',
-    tin: '20218056',
-    address: '28 I. Hakobyan st., Vosketap, Ararat reg., 0617, Armenia',
-    email: 'w33bv.gl@gmail.com',
-    phone: '',
-    website: '',
-  },
-  client: {
-    name: 'Tech Solutions LLC',
-    address: '500 Innovation Way,\nBoston, MA, USA',
-    email: 'finance@techsolutions.com',
-    phone: '',
-  },
-  items: [
-    { id: Date.now(), description: 'Software Development Services (May 2026)', qty: 1, rate: 3500.00 }
-  ],
-  currency: 'USD',
-  notes: 'Payment due within 14 days of invoice date. Thank you for your business!',
-  bankDetails: {
-    bankName: '',
-    accountNo: '',
-    swift: '',
-    iban: '',
-  }
-})
-
-function handleImportJson(json: any) {
-  if (json && typeof json === 'object') {
-    Object.assign(invoiceData, json)
-  }
-}
+const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
 </script>
 
 <template>
-  <div class="invoice-studio">
-    <Toolbar
-        :data="invoiceData"
-        :showJsonPanel="showJsonPanel"
-        @toggleJson="showJsonPanel = !showJsonPanel"
-    />
+  <div class="studio-workspace">
+    <aside class="studio-sidebar side-left">
+      <FormLeft :data="invoiceData" />
+    </aside>
 
-    <div class="studio-workspace">
-      <aside class="studio-sidebar side-left">
-        <FormLeft :data="invoiceData" />
-      </aside>
+    <main class="studio-canvas">
+      <div class="preview-scroll-container">
+        <Preview :data="invoiceData" />
+      </div>
+    </main>
 
-      <main class="studio-canvas">
-        <div class="preview-scroll-container">
-          <Preview :data="invoiceData" />
-        </div>
-      </main>
-
-      <aside class="studio-sidebar side-right">
-        <FormRight :data="invoiceData" />
-      </aside>
-    </div>
+    <aside class="studio-sidebar side-right">
+      <FormRight :data="invoiceData" />
+    </aside>
 
     <JsonPanel
         v-if="showJsonPanel"
@@ -75,14 +29,6 @@ function handleImportJson(json: any) {
 
 <style scoped>
 @layer components {
-  .invoice-studio {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-    background-color: var(--bg-body);
-  }
-
   .studio-workspace {
     flex: 1;
     display: grid;
@@ -120,9 +66,6 @@ function handleImportJson(json: any) {
   }
 
   @media print {
-    .toolbar, .studio-sidebar {
-      display: none !important;
-    }
     .studio-workspace {
       display: block !important;
     }
