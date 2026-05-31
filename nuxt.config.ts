@@ -1,8 +1,4 @@
-const locales = [
-    { code: 'en', language: 'en-US', name: 'English' },
-    { code: 'hy', language: 'hy-AM', name: 'Հայերեն' },
-    { code: 'ru', language: 'ru-RU', name: 'Русский' }
-]
+import { LOCALES } from './app/constants/locales'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -23,7 +19,7 @@ export default defineNuxtConfig({
     },
 
     i18n: {
-        locales,
+        locales: LOCALES,
         defaultLocale: 'en',
         strategy: 'prefix_and_default',
         vueI18n: './i18n.config.ts'

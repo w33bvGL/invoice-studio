@@ -12,25 +12,11 @@ const currentThemeCss = computed(() => {
   const theme = themes.value?.find((t: any) => t.id === store.data.theme)
   return theme?.css || ''
 })
-
-const docLanguageOptions = [
-  { label: 'English', value: 'en' },
-  { label: 'Հայերեն', value: 'hy' }
-]
 </script>
 
 <template>
   <div class="preview-wrapper">
-    <div class="preview-controls">
-      <label class="lang-selector">
-        <span>Язык документа:</span>
-        <select v-model="store.data.docLang" class="lang-select">
-          <option v-for="opt in docLanguageOptions" :key="opt.value" :value="opt.value">
-            {{ opt.label }}
-          </option>
-        </select>
-      </label>
-    </div>
+    <PreviewControls/>
 
     <div class="preview-container">
       <component :is="'style'">{{ currentThemeCss }}</component>
@@ -51,32 +37,7 @@ const docLanguageOptions = [
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--bg-body, #f3f4f6);
-}
-
-.preview-controls {
-  padding: 16px;
-  background-color: var(--bg-surface, #ffffff);
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
-  display: flex;
-  justify-content: flex-end;
-}
-
-.lang-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-base, #374151);
-}
-
-.lang-select {
-  padding: 6px 12px;
-  border: 1px solid var(--border-color, #d1d5db);
-  border-radius: 6px;
-  background: var(--bg-surface, #fff);
-  color: var(--text-base, #111827);
-  outline: none;
+  background-color: var(--bg-body);
 }
 
 .preview-container {
@@ -86,7 +47,6 @@ const docLanguageOptions = [
   justify-content: center;
 }
 
-/* БАЗОВЫЕ СТИЛИ ЛИСТА (ЖЕСТКИЕ ЦВЕТА) */
 .invoice-sheet {
   background-color: #ffffff;
   width: 210mm;
@@ -98,7 +58,7 @@ const docLanguageOptions = [
   color: #111827;
   font-size: 14px;
   line-height: 1.5;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Тень для красоты на экране */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   position: relative;
   text-align: left;
 }
@@ -110,8 +70,6 @@ const docLanguageOptions = [
 }
 
 @media print {
-  .preview-wrapper, .preview-container { background: none; padding: 0; }
-  .preview-controls { display: none; }
-  .invoice-sheet { width: 100%; min-height: auto; padding: 0; box-shadow: none; border: none; }
+  .invoice-sheet { width: 100%; min-height: 100%;}
 }
 </style>
