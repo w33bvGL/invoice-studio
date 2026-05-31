@@ -1,14 +1,7 @@
-<script setup lang="ts">
-const { invoiceData, showJsonPanel, toggleJson } = useInvoice()
-</script>
 
 <template>
   <div class="layout-container">
-    <Toolbar
-        :data="invoiceData"
-        :showJsonPanel="showJsonPanel"
-        @toggleJson="toggleJson"
-    />
+    <Toolbar />
 
     <div class="layout-content">
       <slot />

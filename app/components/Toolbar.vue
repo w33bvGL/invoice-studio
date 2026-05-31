@@ -1,23 +1,10 @@
 <script setup lang="ts">
-defineProps<{
-  data: any
-  showJsonPanel: boolean
-}>()
+import { useInvoiceStore } from '~/stores/invoice'
 
-const emit = defineEmits(['toggleJson'])
+const store = useInvoiceStore()
 
 function printInvoice() {
   window.print()
-}
-
-function exportJson(data: any) {
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `invoice-${data.invoiceNo}.json`
-  a.click()
-  URL.revokeObjectURL(url)
 }
 </script>
 
@@ -29,7 +16,7 @@ function exportJson(data: any) {
       </div>
       <span class="brand-name">INVOICELAB</span>
       <div class="divider"></div>
-      <span class="invoice-id font-mono">#{{ data.invoiceNo }}</span>
+      <span class="invoice-id font-mono">#{{ store.data.invoiceNo }}</span>
     </div>
 
     <div class="toolbar-actions">
@@ -38,12 +25,16 @@ function exportJson(data: any) {
 
       <div class="divider"></div>
 
-      <UiButton :variant="showJsonPanel ? 'secondary' : 'ghost'" size="sm" @click="emit('toggleJson')">
+      <UiButton
+          :variant="store.showJsonPanel ? 'secondary' : 'ghost'"
+          size="sm"
+          @click="store.toggleJsonPanel()"
+      >
         <Icon name="heroicons:code-bracket" class="btn-icon" />
         {{ $t('toolbar.toolkit') }}
       </UiButton>
 
-      <UiButton variant="ghost" size="sm" @click="exportJson(data)">
+      <UiButton variant="ghost" size="sm" @click="store.exportJsonFile()">
         {{ $t('toolbar.export') }}
       </UiButton>
 

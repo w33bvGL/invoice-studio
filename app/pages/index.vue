@@ -1,11 +1,7 @@
-<script setup lang="ts">
-const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
-</script>
-
 <template>
   <div class="studio-workspace">
     <aside class="studio-sidebar side-left">
-      <FormLeft/>
+      <FormLeft />
     </aside>
 
     <main class="studio-canvas">
@@ -13,15 +9,9 @@ const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
     </main>
 
     <aside class="studio-sidebar side-right">
-      <FormRight/>
+      <FormRight />
     </aside>
-
-    <JsonPanel
-        v-if="showJsonPanel"
-        :data="invoiceData"
-        @import="handleImportJson"
-        @close="showJsonPanel = false"
-    />
+    <JsonPanel />
   </div>
 </template>
 
