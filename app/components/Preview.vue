@@ -3,12 +3,27 @@ import { useInvoiceStore } from '~/stores/invoice'
 
 const store = useInvoiceStore()
 
+// Получаем темы оформления
 const { data: themes } = await useFetch('/api/themes')
 
 const currentThemeCss = computed(() => {
   const theme = themes.value?.find((t: any) => t.id === store.data.theme)
   return theme?.css || ''
 })
+
+// Хелперы для форматирования (если они у вас не автоимпортируются, раскомментируйте или настройте под себя)
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return '—'
+  return new Date(dateStr).toLocaleDateString()
+}
+
+const formatCurrency = (amount: number, currency: string) => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount)
+}
+
+const calculateTotal = (items: any[]) => {
+  return items.reduce((sum, item) => sum + (Number(item.qty || 0) * Number(item.rate || 0)), 0)
+}
 </script>
 
 <template>
@@ -20,20 +35,20 @@ const currentThemeCss = computed(() => {
 
     <div class="sheet-header">
       <div class="sheet-header__left">
-        <h1 class="invoice-title">INVOICE</h1>
+        <h1 class="invoice-title">{{ $t('invoice.document.title') }}</h1>
         <div class="contractor-tagline">{{ store.data.contractor.name }}</div>
       </div>
       <div class="sheet-header__right">
         <div class="meta-item">
-          <span class="meta-key">Invoice No</span>
+          <span class="meta-key">{{ $t('invoice.document.invoiceNo') }}</span>
           <span class="meta-val font-mono">#{{ store.data.invoiceNo }}</span>
         </div>
         <div class="meta-item">
-          <span class="meta-key">Issue Date</span>
+          <span class="meta-key">{{ $t('invoice.document.issueDate') }}</span>
           <span class="meta-val">{{ formatDate(store.data.date) }}</span>
         </div>
         <div class="meta-item">
-          <span class="meta-key">Due Date</span>
+          <span class="meta-key">{{ $t('invoice.document.dueDate') }}</span>
           <span class="meta-val due">{{ formatDate(store.data.dueDate) }}</span>
         </div>
       </div>
@@ -43,16 +58,34 @@ const currentThemeCss = computed(() => {
 
     <div class="parties-grid">
       <div class="party">
-        <div class="party-label">From</div>
-        <div class="party-name">{{ store.data.contractor.name }}</div>
-        <div class="party-detail">{{ store.data.contractor.email }}</div>
-        <div class="party-detail">{{ store.data.contractor.phone }}</div>
+        <div class="party-label">{{ $t('invoice.contractor.title') }}</div>
+        <div class="party-name">{{ store.data.contractor.name || '—' }}</div>
+
+        <div v-if="store.data.contractor.address" class="party-detail party-address">
+          {{ store.data.contractor.address }}
+        </div>
+
+        <div v-if="store.data.contractor.regNo" class="party-detail font-mono">
+          {{ $t('invoice.contractor.regNo') }}: {{ store.data.contractor.regNo }}
+        </div>
+        <div v-if="store.data.contractor.tin" class="party-detail font-mono">
+          {{ $t('invoice.contractor.tin') }}: {{ store.data.contractor.tin }}
+        </div>
+        <div v-if="store.data.contractor.email" class="party-detail">{{ store.data.contractor.email }}</div>
+        <div v-if="store.data.contractor.phone" class="party-detail">{{ store.data.contractor.phone }}</div>
+        <div v-if="store.data.contractor.website" class="party-detail party-link">{{ store.data.contractor.website }}</div>
       </div>
 
       <div class="party party--right">
-        <div class="party-label">Bill To</div>
+        <div class="party-label">{{ $t('invoice.client.title') }}</div>
         <div class="party-name">{{ store.data.client.name || '—' }}</div>
-        <div class="party-detail">{{ store.data.client.email }}</div>
+
+        <div v-if="store.data.client.address" class="party-detail party-address">
+          {{ store.data.client.address }}
+        </div>
+
+        <div v-if="store.data.client.email" class="party-detail">{{ store.data.client.email }}</div>
+        <div v-if="store.data.client.phone" class="party-detail">{{ store.data.client.phone }}</div>
       </div>
     </div>
 
@@ -67,7 +100,7 @@ const currentThemeCss = computed(() => {
       </thead>
       <tbody>
       <tr v-for="(item, i) in store.data.items" :key="i" class="item-row">
-        <td class="td-desc">{{ item.description }}</td>
+        <td class="td-desc">{{ item.description || '—' }}</td>
         <td class="td-num font-mono">{{ item.qty }}</td>
         <td class="td-num font-mono">{{ formatCurrency(item.rate, store.data.currency) }}</td>
         <td class="td-num td-amount font-mono">
@@ -84,8 +117,45 @@ const currentThemeCss = computed(() => {
       </tr>
       </tfoot>
     </table>
+
+    <div v-if="store.data.bankDetails.bankName || store.data.bankDetails.accountNo" class="bank-card">
+      <div class="bank-card__title">Bank Details</div>
+      <div class="bank-grid">
+        <div v-if="store.data.bankDetails.bankName" class="bank-item">
+          <span class="bank-key">Bank</span>
+          <span class="bank-val">{{ store.data.bankDetails.bankName }}</span>
+        </div>
+        <div v-if="store.data.bankDetails.accountNo" class="bank-item">
+          <span class="bank-key">Account No</span>
+          <span class="bank-val font-mono">{{ store.data.bankDetails.accountNo }}</span>
+        </div>
+        <div v-if="store.data.bankDetails.swift" class="bank-item">
+          <span class="bank-key">SWIFT / BIC</span>
+          <span class="bank-val font-mono">{{ store.data.bankDetails.swift }}</span>
+        </div>
+        <div v-if="store.data.bankDetails.iban" class="bank-item">
+          <span class="bank-key">IBAN</span>
+          <span class="bank-val font-mono">{{ store.data.bankDetails.iban }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="store.data.notes" class="notes-block">
+      <div class="notes-label">Notes</div>
+      <div class="notes-text">{{ store.data.notes }}</div>
+    </div>
+
+    <div class="signature-area">
+      <div class="sig-block">
+        <div class="sig-label">Authorized Signature</div>
+        <div class="sig-line"></div>
+        <div class="sig-name">{{ store.data.contractor.name }}</div>
+      </div>
+    </div>
+
   </div>
 </template>
+
 <style scoped>
 .invoice-sheet {
   background-color: #ffffff;

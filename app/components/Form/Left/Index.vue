@@ -1,14 +1,8 @@
-<script setup lang="ts">
-defineProps<{
-  data: any
-}>()
-</script>
-
 <template>
   <div class="panel-layout">
-    <FormLeftInvoiceDocumentSection :model-value="data" />
-    <FormLeftInvoiceContractorSection :model-value="data" />
-    <FormLeftInvoiceClientSection :model-value="data" />
+    <FormLeftInvoiceDocumentSection />
+    <FormLeftInvoiceContractorSection />
+    <FormLeftInvoiceClientSection />
   </div>
 </template>
 
