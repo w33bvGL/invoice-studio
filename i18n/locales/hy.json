@@ -1,50 +1,50 @@
 {
   "invoice": {
     "document": {
-      "title": "Document",
-      "invoiceNo": "Invoice No",
-      "currency": "Currency",
-      "issueDate": "Issue Date",
-      "dueDate": "Due Date"
+      "title": "Փաստաթուղթ",
+      "invoiceNo": "Հաշիվ-ապրանքագրի №",
+      "currency": "Արժույթ",
+      "issueDate": "Դուրսգրման ամսաթիվ",
+      "dueDate": "Վճարման վերջնաժամկետ"
     },
     "contractor": {
-      "title": "From (Contractor)",
-      "badge": "You",
-      "name": "Company / Name",
-      "regNo": "Reg No",
-      "tin": "TIN",
-      "address": "Legal Address",
-      "email": "Email",
-      "phone": "Phone",
-      "website": "Website"
+      "title": "Ումից (Կատարող)",
+      "badge": "Դուք",
+      "name": "Կազմակերպություն / Անուն",
+      "regNo": "Գրանցման №",
+      "tin": "ՀՎՀՀ",
+      "address": "Իրավաբանական հասցե",
+      "email": "Էլ. փոստ",
+      "phone": "Հեռախոս",
+      "website": "Կայք"
     },
     "client": {
-      "title": "To (Client)",
-      "name": "Company / Name",
-      "address": "Legal Address",
-      "email": "Email",
-      "phone": "Phone"
+      "title": "Ում (Հաճախորդ)",
+      "name": "Կազմակերպություն / Անուն",
+      "address": "Իրավաբանական հասցե",
+      "email": "Էլ. փոստ",
+      "phone": "Հեռախոս"
     },
     "items": {
-      "title": "Line Items",
-      "itemIndex": "Item #{current}",
-      "description": "Description",
-      "qty": "Qty",
-      "rate": "Rate",
-      "amount": "Amount",
-      "addRow": "Add Row",
-      "totalDue": "Total Due:"
+      "title": "Մատուցվող ծառայություններ / Ապրանքներ",
+      "itemIndex": "Տող #{current}",
+      "description": "Նկարագրություն",
+      "qty": "Քանակ",
+      "rate": "Սակագին",
+      "amount": "Գումար",
+      "addRow": "Ավելացնել տող",
+      "totalDue": "Ընդամենը վճարման՝"
     },
     "bank": {
-      "title": "Bank Details",
-      "bankName": "Bank Name",
-      "accountNo": "Account No",
+      "title": "Բանկային տվյալներ",
+      "bankName": "Բանկի անվանում",
+      "accountNo": "Հաշվեհամար",
       "swift": "SWIFT / BIC",
       "iban": "IBAN"
     },
     "notes": {
-      "title": "Terms & Notes",
-      "placeholder": "Payment terms, additional corporate notes..."
+      "title": "Պայմաններ և նշումներ",
+      "placeholder": "Վճարման պայմաններ, լրացուցիչ կորպորատիվ նշումներ..."
     }
   }
 }
