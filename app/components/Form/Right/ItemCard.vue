@@ -24,25 +24,25 @@ const formatCurrency = (v: number, currency: string) =>
 <template>
   <div class="item-card">
     <div class="item-card-header">
-      <span class="item-index">{{ $t('invoice.items.itemIndex', { current: String(index + 1).padStart(2, '0') }) }}</span>
+      <span class="item-index">{{ $t('right.data.items.itemIndex', { current: String(index + 1).padStart(2, '0') }) }}</span>
       <UiButton v-if="showRemove" variant="ghost" size="sm" class="btn-remove" @click="$emit('remove')">
         <Icon name="heroicons:x-mark" class="btn-icon" />
       </UiButton>
     </div>
 
-    <UiInput v-model="item.description" :label="$t('invoice.items.description')" placeholder="Software Development..." />
+    <UiInput v-model="item.description" :label="$t('right.data.items.description')" placeholder="Software Development..." />
 
     <div class="item-meta-row">
       <div class="field-qty">
-        <UiInput v-model.number="item.qty" type="number" :label="$t('invoice.items.qty')" min="0" />
+        <UiInput v-model.number="item.qty" type="number" :label="$t('right.data.items.qty')" min="0" />
       </div>
 
       <div class="field-rate">
-        <UiInput v-model.number="item.rate" type="number" step="0.01" :label="`${$t('invoice.items.rate')} (${currency})`" />
+        <UiInput v-model.number="item.rate" type="number" step="0.01" :label="`${$t('right.data.items.rate')} (${currency})`" />
       </div>
 
       <div class="computed-field">
-        <span class="computed-label">{{ $t('invoice.items.amount') }}</span>
+        <span class="computed-label">{{ $t('right.data.items.amount') }}</span>
         <div class="computed-value font-mono">
           {{ formatCurrency((item.qty || 0) * (item.rate || 0), currency) }}
         </div>

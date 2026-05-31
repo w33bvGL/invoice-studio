@@ -7,23 +7,23 @@ const { data } = storeToRefs(store)
 </script>
 
 <template>
-  <UiCard :title="$t('invoice.contractor.title')" icon="heroicons:building-office" :badge="$t('invoice.contractor.badge')">
+  <UiCard :title="$t('left.contractor.title')" icon="heroicons:building-office" :badge="$t('left.contractor.badge')">
     <UiInput
         v-model="data.contractor.name"
-        :label="$t('invoice.contractor.name')"
+        :label="$t('left.contractor.name')"
         placeholder="IE Vahe Sargsyan"
     />
 
     <div class="grid-2">
       <UiInput
           v-model="data.contractor.regNo"
-          :label="$t('invoice.contractor.regNo')"
+          :label="$t('left.contractor.regNo')"
           class="font-mono"
           placeholder="286.1571600"
       />
       <UiInput
           v-model="data.contractor.tin"
-          :label="$t('invoice.contractor.tin')"
+          :label="$t('left.contractor.tin')"
           class="font-mono"
           placeholder="20218056"
       />
@@ -31,20 +31,20 @@ const { data } = storeToRefs(store)
 
     <UiTextArea
         v-model="data.contractor.address"
-        :label="$t('invoice.contractor.address')"
+        :label="$t('left.contractor.address')"
         placeholder="Street, City, Country"
         :rows="2"
     />
     <UiInput
         v-model="data.contractor.email"
         type="email"
-        :label="$t('invoice.contractor.email')"
+        :label="$t('left.contractor.email')"
         placeholder="you@example.com"
     />
 
     <div class="grid-2">
-      <UiInput v-model="data.contractor.phone" :label="$t('invoice.contractor.phone')" placeholder="+374 ..." />
-      <UiInput v-model="data.contractor.website" :label="$t('invoice.contractor.website')" placeholder="yoursite.com" />
+      <UiInput v-model="data.contractor.phone" :label="$t('left.contractor.phone')" placeholder="+374 ..." />
+      <UiInput v-model="data.contractor.website" :label="$t('left.contractor.website')" placeholder="yoursite.com" />
     </div>
   </UiCard>
 </template>

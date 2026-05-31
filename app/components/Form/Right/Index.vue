@@ -17,9 +17,9 @@ const tabs = [
     <UiTabs :tabs="tabs" v-model="activeTab" />
 
     <div v-if="activeTab === 'data'" class="tab-content">
-      <FormRightInvoiceItemsSection :model-value="data" />
-      <FormRightInvoiceBankSection :model-value="data" />
-      <FormRightInvoiceNotesSection :model-value="data" />
+      <FormRightDataItemsSection :model-value="data" />
+      <FormRightDataBankSection :model-value="data" />
+      <FormRightDataNotesSection :model-value="data" />
     </div>
 
     <FormRightDesign v-if="activeTab === 'design'" :model-value="data" @update:model-value="$emit('update:data', $event)" />
@@ -29,5 +29,11 @@ const tabs = [
 <style scoped>
 .panel-layout {
   padding: var(--space-base);
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 </style>

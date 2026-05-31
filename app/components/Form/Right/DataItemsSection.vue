@@ -21,9 +21,9 @@ function removeItem(index: number) {
 </script>
 
 <template>
-  <UiCard :title="$t('invoice.items.title')" icon="heroicons:bolt">
+  <UiCard :title="$t('right.data.items.title')" icon="heroicons:bolt">
     <div class="items-list">
-      <UiItemCard
+      <FormRightItemCard
           v-for="(item, index) in modelValue.items"
           :key="item.id"
           :item="item"
@@ -36,11 +36,11 @@ function removeItem(index: number) {
 
     <UiButton variant="secondary" class="w-full" @click="addItem">
       <Icon name="heroicons:plus" class="btn-add-icon" />
-      {{ $t('invoice.items.addRow') }}
+      {{ $t('right.data.items.addRow') }}
     </UiButton>
 
     <div class="total-row">
-      <span class="total-label">{{ $t('invoice.items.totalDue') }}</span>
+      <span class="total-label">{{ $t('right.data.items.totalDue') }}</span>
       <span class="total-value font-mono">{{ formatCurrency(total) }}</span>
     </div>
   </UiCard>
