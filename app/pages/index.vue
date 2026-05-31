@@ -119,7 +119,6 @@ function handleImportJson(json: any) {
     justify-content: center;
   }
 
-  /* Печатные хаки — убираем всё лишнее при печати */
   @media print {
     .toolbar, .studio-sidebar {
       display: none !important;
