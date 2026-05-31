@@ -119,7 +119,6 @@ watch(
 </template>
 
 <style scoped>
-/* ── Backdrop ─────────────────────────────────── */
 .backdrop {
   position: fixed;
   inset: 0;
@@ -137,7 +136,6 @@ watch(
   opacity: 0;
 }
 
-/* ── Drawer ───────────────────────────────────── */
 .drawer {
   position: fixed;
   top: 0;
@@ -162,7 +160,6 @@ watch(
   transform: translateX(100%);
 }
 
-/* ── Header ───────────────────────────────────── */
 .drawer-header {
   display: flex;
   align-items: center;
@@ -199,7 +196,6 @@ watch(
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* ── Body ─────────────────────────────────────── */
 .drawer-body {
   flex: 1;
   padding: var(--space-base);
@@ -227,7 +223,6 @@ watch(
   transform: translateY(-4px);
 }
 
-/* ── Actions row ──────────────────────────────── */
 .actions-row {
   display: flex;
   justify-content: space-between;
@@ -254,7 +249,6 @@ watch(
   color: var(--text-muted);
 }
 
-/* ── Code view ────────────────────────────────── */
 .code-view {
   flex: 1;
   background-color: var(--bg-body);
@@ -268,7 +262,6 @@ watch(
   min-height: 0;
 }
 
-/* ── Error ────────────────────────────────────── */
 .error-box {
   background-color: oklch(95% 0.05 20);
   border: 1px solid oklch(60% 0.15 20);

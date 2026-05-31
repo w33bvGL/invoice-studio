@@ -10,7 +10,6 @@
 </template>
 
 <style scoped>
-@layer components {
   .layout-container {
     display: flex;
     flex-direction: column;
@@ -25,5 +24,4 @@
     flex-direction: column;
     overflow: hidden;
   }
-}
 </style>

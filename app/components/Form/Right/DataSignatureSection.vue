@@ -11,14 +11,14 @@ const onFileChange = (e: Event) => {
   if (file) {
     const reader = new FileReader()
     reader.onload = (event) => {
-      store.updateData('signatureImage', event.target?.result as string)
+      store.updateField('signatureImage', event.target?.result as string)
     }
     reader.readAsDataURL(file)
   }
 }
 
 const clearSignature = () => {
-  store.updateData('signatureImage', '')
+  store.updateField('signatureImage', '')
 }
 </script>
 

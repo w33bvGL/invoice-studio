@@ -41,63 +41,89 @@ export interface InvoiceData {
     notes: string
 }
 
-const defaultData = (): InvoiceData => ({
-    invoiceNo: '2026-001',
-    date: new Date().toISOString().split('T')[0],
-    dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    docLang: 'en',
-    theme: 'default',
-    contractor: {
-        name: 'IE Vahe Sargsyan',
-        regNo: '286.1571600',
-        tin: '20218056',
-        address: '28 I. Hakobyan st., Vosketap, Ararat reg., 0617, Armenia',
-        email: 'w33bv.gl@gmail.com',
-        phone: '',
-        website: '',
-    },
-    client: {
-        name: 'Tech Solutions LLC',
-        address: '500 Innovation Way,\nBoston, MA, USA',
-        email: 'finance@techsolutions.com',
-        phone: '',
-    },
-    items: [
-        { id: Date.now(), description: 'Software Development Services (May 2026)', qty: 1, rate: 3500.00 }
-    ],
-    currency: 'USD',
-    bankDetails: {
-        bankName: '',
-        accountNo: '',
-        swift: '',
-        iban: '',
-    },
-    signatureImage: '',
-    notes: 'Payment due within 14 days of invoice date. Thank you for your business!',
-})
+/**
+ * Возвращает данные для одной из двух смешных компаний на выбор
+ * Чтобы переключить, просто передайте 'magic' или 'space'
+ */
+const getSampleData = (type: 'magic' | 'space'): InvoiceData => {
+    const common = {
+        invoiceNo: `INV-${Math.floor(Math.random() * 1000)}`,
+        date: new Date().toISOString().split('T')[0],
+        dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        docLang: 'en',
+        theme: 'default',
+        currency: 'USD',
+        signatureImage: '',
+        notes: 'Please pay promptly, or the invoice gnomes will come for your socks.',
+    }
+
+    if (type === 'magic') {
+        return {
+            ...common,
+            contractor: {
+                name: 'Hogwarts Freelance Services',
+                regNo: '999-WITCH',
+                tin: '123456789',
+                address: 'Room of Requirement, Castle Grounds, Scotland',
+                email: 'albus.d@magic.net',
+                phone: '+44 20 7946 0000',
+                website: 'magic-billing.wiz',
+            },
+            client: {
+                name: 'Dragon Taming Agency',
+                address: '12 Fire Pit Ln, Volcano City',
+                email: 'fire@dragons.com',
+                phone: '+1 555 0101',
+            },
+            items: [{ id: Date.now(), description: 'Removing dark curses from spreadsheet', qty: 1, rate: 5000.00 }],
+            bankDetails: { bankName: 'Gringotts Bank', accountNo: '777-GOLD', swift: 'GRINGOTTS', iban: 'GB1234' }
+        }
+    }
+
+    return {
+        ...common,
+        contractor: {
+            name: 'Intergalactic Pizza Delivery',
+            regNo: 'SPACE-007',
+            tin: '00000001',
+            address: 'Asteroid Belt, Sector 7G',
+            email: 'pepperoni@space.orbit',
+            phone: '+00 000 000 000',
+            website: 'pizza.space',
+        },
+        client: {
+            name: 'Martian Colony One',
+            address: 'Red Planet, Crater Surface',
+            email: 'manager@mars.planet',
+            phone: '+99 999 999 999',
+        },
+        items: [{ id: Date.now(), description: 'Interstellar delivery fee (gravity-free)', qty: 10, rate: 150.00 }],
+        bankDetails: { bankName: 'Nebula Credit Union', accountNo: 'STAR-SHIP', swift: 'NEBULA', iban: 'MA0000' }
+    }
+}
 
 export const useInvoiceStore = defineStore('invoice', {
     state: () => ({
-        data: defaultData() as InvoiceData,
+        data: getSampleData('magic') as InvoiceData, // По умолчанию стоит "Магия"
         showJsonPanel: false,
     }),
 
     getters: {
-        // Вычисляемые поля для Preview — не считаем в компонентах
         subtotal: (state) =>
             state.data.items.reduce((sum, item) => sum + item.qty * item.rate, 0),
     },
 
     actions: {
-        /**
-         * Универсальный сеттер по dot-path: updateField('client.name', 'Acme')
-         * Используется в формах через v-model + @update:modelValue
-         */
         updateField(path: string, value: any) {
             const keys = path.split('.')
             let obj: any = this.data
             for (let i = 0; i < keys.length - 1; i++) obj = obj[keys[i]]
             obj[keys[keys.length - 1]] = value
+        },
+
+        // Добавил метод для смены "смешной компании"
+        loadSample(type: 'magic' | 'space') {
+            this.data = getSampleData(type)
         },
 
         toggleJsonPanel() {
@@ -108,9 +134,6 @@ export const useInvoiceStore = defineStore('invoice', {
             this.showJsonPanel = false
         },
 
-        /**
-         * Импорт: глубокий мердж, не перетираем ключи которых нет в пришедшем json
-         */
         importJson(json: Partial<InvoiceData>) {
             if (!json || typeof json !== 'object') return
             this.data = {
@@ -123,9 +146,6 @@ export const useInvoiceStore = defineStore('invoice', {
             }
         },
 
-        /**
-         * Экспорт в файл — экшен, не логика в компоненте
-         */
         exportJsonFile() {
             const blob = new Blob([JSON.stringify(this.data, null, 2)], { type: 'application/json' })
             const url = URL.createObjectURL(blob)
@@ -137,7 +157,7 @@ export const useInvoiceStore = defineStore('invoice', {
         },
 
         resetToDefault() {
-            this.data = defaultData()
+            this.data = getSampleData('magic')
         },
     },
 })
