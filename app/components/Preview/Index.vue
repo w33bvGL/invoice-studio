@@ -27,6 +27,7 @@ const currentThemeCss = computed(() => {
         <PreviewParties />
         <PreviewItems />
         <PreviewFooter />
+        <PreviewSignature/>
       </div>
     </div>
   </div>
@@ -57,7 +58,7 @@ const currentThemeCss = computed(() => {
   background-color: #ffffff;
   width: 210mm;
   min-height: 297mm;
-  padding: 20mm;
+  padding: 12mm;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -76,9 +77,4 @@ const currentThemeCss = computed(() => {
   margin-bottom: 32px;
 }
 
-@media print {
-  .preview-wrapper { overflow: visible; }
-  .scroll-area { padding: 0; overflow: visible; }
-  .invoice-sheet { width: 100%; min-height: 100%; box-shadow: none; }
-}
 </style>

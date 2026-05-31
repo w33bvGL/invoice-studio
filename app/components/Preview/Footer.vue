@@ -36,20 +36,12 @@ const tDoc = inject<Function>('tDoc')!
       <div class="notes-label">{{ tDoc('doc.notes') }}</div>
       <div class="notes-text">{{ data.notes }}</div>
     </div>
-
-    <div class="signature-area">
-      <div class="sig-block">
-        <div class="sig-label">{{ tDoc('doc.signature') }}</div>
-        <div class="sig-line"></div>
-        <div class="sig-name">{{ data.contractor.name }}</div>
-      </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
 .footer-wrapper {
-  margin-top: auto; /* Прижимает футер к низу, если контента мало */
+  margin-top: auto;
 }
 .bank-card {
   padding: 20px;
@@ -98,30 +90,6 @@ const tDoc = inject<Function>('tDoc')!
   line-height: 1.5;
   border-left: 2px solid #e5e7eb;
   padding-left: 12px;
-}
-.signature-area {
-  padding-top: 40px;
-}
-.sig-block {
-  display: inline-block;
-}
-.sig-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #9ca3af;
-  text-transform: uppercase;
-  margin-bottom: 40px;
-}
-.sig-line {
-  width: 200px;
-  height: 1px;
-  background-color: #d1d5db;
-  margin-bottom: 8px;
-}
-.sig-name {
-  font-size: 12px;
-  color: #6b7280;
-  font-weight: 500;
 }
 .font-mono { font-family: monospace; }
 </style>

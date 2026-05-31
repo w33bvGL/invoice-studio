@@ -29,7 +29,7 @@ const { invoiceData, showJsonPanel, handleImportJson } = useInvoice()
 .studio-workspace {
   flex: 1;
   display: grid;
-  grid-template-columns: 450px 1fr 450px;
+  grid-template-columns: 420px 1fr 420px;
   height: 100vh;
   overflow: hidden;
 }
