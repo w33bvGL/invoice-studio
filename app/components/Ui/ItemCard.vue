@@ -32,13 +32,20 @@ const formatCurrency = (v: number, currency: string) =>
 
     <UiInput v-model="item.description" :label="$t('invoice.items.description')" placeholder="Software Development..." />
 
-    <div class="grid-3">
-      <UiInput v-model.number="item.qty" type="number" :label="$t('invoice.items.qty')" min="0" />
-      <UiInput v-model.number="item.rate" type="number" step="0.01" :label="`${$t('invoice.items.rate')} (${currency})`" />
+    <div class="item-meta-row">
+      <div class="field-qty">
+        <UiInput v-model.number="item.qty" type="number" :label="$t('invoice.items.qty')" min="0" />
+      </div>
+
+      <div class="field-rate">
+        <UiInput v-model.number="item.rate" type="number" step="0.01" :label="`${$t('invoice.items.rate')} (${currency})`" />
+      </div>
 
       <div class="computed-field">
         <span class="computed-label">{{ $t('invoice.items.amount') }}</span>
-        <div class="computed-value font-mono">{{ formatCurrency((item.qty || 0) * (item.rate || 0), currency) }}</div>
+        <div class="computed-value font-mono">
+          {{ formatCurrency((item.qty || 0) * (item.rate || 0), currency) }}
+        </div>
       </div>
     </div>
   </div>
@@ -67,19 +74,33 @@ const formatCurrency = (v: number, currency: string) =>
   color: var(--text-muted);
 }
 
+.btn-remove {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+
 .btn-icon {
   width: 14px;
   height: 14px;
 }
 
-.grid-3 {
-  display: grid;
-  grid-template-columns: 70px 1fr 1fr;
+.item-meta-row {
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-sm);
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
+.field-qty {
+  flex: 1 1 80px;
+}
+
+.field-rate {
+  flex: 2 1 120px;
+}
 .computed-field {
+  flex: 2 1 120px;
   display: flex;
   flex-direction: column;
   gap: var(--space-xxs);
@@ -93,7 +114,9 @@ const formatCurrency = (v: number, currency: string) =>
 }
 
 .computed-value {
-  padding: 0.5rem 0;
+  height: 38px;
+  display: flex;
+  align-items: center;
   font-size: var(--font-small);
   font-weight: var(--weight-semibold);
   color: var(--color-heading);

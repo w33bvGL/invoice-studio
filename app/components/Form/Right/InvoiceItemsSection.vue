@@ -74,7 +74,6 @@ function removeItem(index: number) {
 }
 
 .total-value {
-  font-size: var(--font-h2);
   font-weight: var(--weight-bold);
   color: var(--color-heading);
 }
