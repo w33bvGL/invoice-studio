@@ -1,5 +1,5 @@
 :root {
-    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 'Inter', "Helvetica Neue", Arial, sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-serif: 'Playfair Display', 'Didot', 'Bodoni MT', 'Noto Serif', Georgia, serif;
     --font-mono: 'Geist Mono', 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 }
@@ -7,7 +7,7 @@
 :root {
     --font-header: var(--font-sans);
     --font-body-family: var(--font-sans);
-    --font-size-root: 14px;
+    --font-size-root: 16px;
 
     --base-50: oklch(98.5% 0 0);
     --base-100: oklch(96.5% 0 0);
@@ -67,7 +67,6 @@
     --leading-tight: 1.15;
     --leading-normal: 1.5;
 
-    /* Размеры отступов */
     --space-xxs: 0.25rem;
     --space-xs: 0.5rem;
     --space-sm: 0.75rem;

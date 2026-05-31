@@ -1,93 +1,50 @@
 {
-  "routes": {
-    "home": "Главная",
-    "projects": "Кейсы",
-    "about": "Профиль"
-  },
-  "availability": {
-    "available": "Доступен для работы",
-    "unavailable": "Занят"
-  },
-  "error": {
-    "404_title": "Страница не найдена (ノ°益°)ノ",
-    "default_title": "Системный сбой (｡•́︿•̀｡)",
-    "404_message": "Роут не существует. 404. (－_－) zzZ",
-    "default_message": "Критическая ошибка выполнения. (╯°□°）╯",
-    "return": "На главную"
-  },
-  "index": {
-    "cta": {
-      "title": "Vahe Sargsyan. Full Stack Engineer.",
-      "description": "Проектирую отказоустойчивый бэкенд (асинхронный PHP, Swoole, DDD) и собираю сложные SPA/SSR интерфейсы на современном фронтенд-стеке. Решаю задачи от архитектуры БД под высокие нагрузки до оптимизации клиентского рендеринга. (驾_驾)",
-      "resume": {
-        "label": "Резюме / CV",
-        "download": "Скачать PDF",
-        "languages": {
-          "en": "English",
-          "hy": "Հայերեն",
-          "ru": "Русский"
-        }
-      }
+  "invoice": {
+    "document": {
+      "title": "Document",
+      "invoiceNo": "Invoice No",
+      "currency": "Currency",
+      "issueDate": "Issue Date",
+      "dueDate": "Due Date"
     },
-    "experience": {
-      "title": "Опыт работы",
-      "description": "Коммерческая разработка: реализованные задачи, архитектурные решения и стек. (⚙_⚙)",
-      "years": [
-        "год",
-        "года",
-        "лет"
-      ],
-      "months": [
-        "месяц",
-        "месяца",
-        "месяцев"
-      ],
-      "lessThanMonth": "< 1 мес."
+    "contractor": {
+      "title": "From (Contractor)",
+      "badge": "You",
+      "name": "Company / Name",
+      "regNo": "Reg No",
+      "tin": "TIN",
+      "address": "Legal Address",
+      "email": "Email",
+      "phone": "Phone",
+      "website": "Website"
     },
-    "education": {
-      "title": "Бэкграунд",
-      "description": "Профильное образование и квалификация. (o_O)"
+    "client": {
+      "title": "To (Client)",
+      "name": "Company / Name",
+      "address": "Legal Address",
+      "email": "Email",
+      "phone": "Phone"
     },
-    "faq": {
-      "title": "Q&A",
-      "description": "Стек, процессы и условия технического сотрудничества. (￣ω￣;)"
+    "items": {
+      "title": "Line Items",
+      "itemIndex": "Item #{current}",
+      "description": "Description",
+      "qty": "Qty",
+      "rate": "Rate",
+      "amount": "Amount",
+      "addRow": "Add Row",
+      "totalDue": "Total Due:"
     },
-    "the_connect": {
-      "title": "Интеграция в проект (ò_ó)",
-      "description": "Подключаюсь на этапе проектирования архитектуры, аудита кода или разработки сложных модулей. (＠_＠)",
-      "contact_telegram": "Написать в Telegram"
+    "bank": {
+      "title": "Bank Details",
+      "bankName": "Bank Name",
+      "accountNo": "Account No",
+      "swift": "SWIFT / BIC",
+      "iban": "IBAN"
+    },
+    "notes": {
+      "title": "Terms & Notes",
+      "placeholder": "Payment terms, additional corporate notes..."
     }
-  },
-  "about": {
-    "title": "Инженерный профиль",
-    "description": "Full Stack Engineer. Проектирую отказоустойчивую бэкенд-архитектуру (Swoole, DDD) и создаю производительные SPA/SSR интерфейсы. Оптимизирую базы данных, пишу чистый код и закрываю весь цикл разработки продукта.",
-    "stack": {
-      "title": "Технический стек",
-      "description": "Рабочий инструмент: языки, фреймворки, СУБД и инфраструктура автоматизации. (⌐■_■)凸"
-    },
-    "story": {
-      "title": "Инженерные принципы ( ` ω ` )",
-      "description": "Решаю проблемы бизнеса кодом. Не пложу спагетти, автоматизирую рутину, отвечаю за производительность. (￣▽￣)b"
-    }
-  },
-  "projects": {
-    "title": "Кейсы и проекты",
-    "description": "Коммерческие продакшн-решения. Полный цикл: от проектирования интерактивных SPA/SSR интерфейсов до архитектуры БД и CI/CD деплоя. (∠_∠)",
-    "sensitive_content": "NDA / Закрытый код (递_递)"
-  },
-  "languages": {
-    "title": "Языки"
-  },
-  "resume": {
-    "name": "Vahe",
-    "surname": "Sargsyan",
-    "position": "Full Stack Developer",
-    "stack": "PHP (Swoole) / DDD / PostgreSQL",
-    "contacts": "Контакты",
-    "portfolio": "Портфолио",
-    "skills": "Стек"
-  },
-  "footer": {
-    "copyright": "Vahe Sargsyan. (￣▽￣)b"
   }
 }

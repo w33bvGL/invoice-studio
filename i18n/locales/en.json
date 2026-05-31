@@ -1,85 +1,50 @@
 {
-  "routes": {
-    "home": "Home",
-    "projects": "Cases",
-    "about": "Profile"
-  },
-  "availability": {
-    "available": "Available for projects",
-    "unavailable": "Busy"
-  },
-  "error": {
-    "404_title": "Page not found (ノ°益°)ノ",
-    "default_title": "System failure (｡•́︿•̀｡)",
-    "404_message": "Route does not exist. 404. (－_－) zzZ",
-    "default_message": "Critical runtime error. (╯°□°）╯",
-    "return": "Back to home"
-  },
-  "index": {
-    "cta": {
-      "title": "Vahe Sargsyan. Full Stack Engineer.",
-      "description": "Designing fault-tolerant backends (async PHP, Swoole, DDD) and building complex SPA/SSR interfaces with modern stacks. Solving challenges from high-load DB architecture to client-side rendering optimization. (驾_驾)",
-      "resume": {
-        "label": "Resume / CV",
-        "download": "Download PDF",
-        "languages": {
-          "en": "English",
-          "hy": "Armenian",
-          "ru": "Russian"
-        }
-      }
+  "invoice": {
+    "document": {
+      "title": "Document",
+      "invoiceNo": "Invoice No",
+      "currency": "Currency",
+      "issueDate": "Issue Date",
+      "dueDate": "Due Date"
     },
-    "experience": {
-      "title": "Work Experience",
-      "description": "Commercial development: realized tasks, architectural decisions, and stack. (⚙_⚙)",
-      "years": ["year", "years", "years"],
-      "months": ["month", "months", "months"],
-      "lessThanMonth": "< 1 mo."
+    "contractor": {
+      "title": "From (Contractor)",
+      "badge": "You",
+      "name": "Company / Name",
+      "regNo": "Reg No",
+      "tin": "TIN",
+      "address": "Legal Address",
+      "email": "Email",
+      "phone": "Phone",
+      "website": "Website"
     },
-    "education": {
-      "title": "Background",
-      "description": "Formal education and qualifications. (o_O)"
+    "client": {
+      "title": "To (Client)",
+      "name": "Company / Name",
+      "address": "Legal Address",
+      "email": "Email",
+      "phone": "Phone"
     },
-    "faq": {
-      "title": "Q&A",
-      "description": "Stack, processes, and technical collaboration terms. (￣ω￣;)"
+    "items": {
+      "title": "Line Items",
+      "itemIndex": "Item #{current}",
+      "description": "Description",
+      "qty": "Qty",
+      "rate": "Rate",
+      "amount": "Amount",
+      "addRow": "Add Row",
+      "totalDue": "Total Due:"
     },
-    "the_connect": {
-      "title": "Project Integration (ò_ó)",
-      "description": "Available for architectural design, code auditing, or developing complex modules. (＠_＠)",
-      "contact_telegram": "Message on Telegram"
+    "bank": {
+      "title": "Bank Details",
+      "bankName": "Bank Name",
+      "accountNo": "Account No",
+      "swift": "SWIFT / BIC",
+      "iban": "IBAN"
+    },
+    "notes": {
+      "title": "Terms & Notes",
+      "placeholder": "Payment terms, additional corporate notes..."
     }
-  },
-  "about": {
-    "title": "Engineering Profile",
-    "description": "Full Stack Engineer. Designing fault-tolerant backend architectures (Swoole, DDD) and creating performant SPA/SSR interfaces. Optimizing databases, writing clean code, and handling the full product lifecycle.",
-    "stack": {
-      "title": "Tech Stack",
-      "description": "Working tools: languages, frameworks, DBMS, and automation infrastructure. (⌐■_■)凸"
-    },
-    "story": {
-      "title": "Engineering Principles ( ` ω ` )",
-      "description": "Solving business problems with code. No spaghetti, automating routine, ensuring performance. (￣▽￣)b"
-    }
-  },
-  "projects": {
-    "title": "Cases & Projects",
-    "description": "Commercial production solutions. Full cycle: from interactive SPA/SSR interface design to DB architecture and CI/CD deployment. (∠_∠)",
-    "sensitive_content": "NDA / Private code (递_递)"
-  },
-  "languages": {
-    "title": "Languages"
-  },
-  "resume": {
-    "name": "Vahe",
-    "surname": "Sargsyan",
-    "position": "Full Stack Developer",
-    "stack": "PHP (Swoole) / DDD / PostgreSQL",
-    "contacts": "Contacts",
-    "portfolio": "Portfolio",
-    "skills": "Skills"
-  },
-  "footer": {
-    "copyright": "Vahe Sargsyan. (￣▽￣)b"
   }
 }
