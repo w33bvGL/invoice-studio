@@ -63,7 +63,7 @@ jobs:
           PUPPETEER_EXECUTABLE_PATH: ${{ env.PUPPETEER_EXECUTABLE_PATH }}
 
       - name: Configure Custom Domain
-        run: echo "vahe-sargsyan.com" > .output/public/CNAME
+        run: echo "invoice.vahe-sargsyan.com" > .output/public/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
