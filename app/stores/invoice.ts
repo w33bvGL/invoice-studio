@@ -1,4 +1,4 @@
-// stores/invoice.ts
+
 import { defineStore } from 'pinia'
 
 export interface InvoiceItem {
@@ -41,10 +41,6 @@ export interface InvoiceData {
     notes: string
 }
 
-/**
- * Возвращает данные для одной из двух смешных компаний на выбор
- * Чтобы переключить, просто передайте 'magic' или 'space'
- */
 const getSampleData = (type: 'magic' | 'space'): InvoiceData => {
     const common = {
         invoiceNo: `INV-${Math.floor(Math.random() * 1000)}`,
@@ -121,7 +117,6 @@ export const useInvoiceStore = defineStore('invoice', {
             obj[keys[keys.length - 1]] = value
         },
 
-        // Добавил метод для смены "смешной компании"
         loadSample(type: 'magic' | 'space') {
             this.data = getSampleData(type)
         },
